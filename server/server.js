@@ -47,6 +47,24 @@ app.get('/todos/:id', (req,res) => {
     });
 });
 
+app.delete('/todos/:id', (req,res) => {
+    var id = req.params.id;
+
+    if(!ObjectID.isValid(id)){
+        res.status(404).send();
+    }
+
+    Todo.findByIdAndRemove('5ab155123438c8602f231831').then((todo) => {
+        if(!todo){
+            res.status(404).send();
+        }
+        res.status(200).send();
+    }).catch((e) => {
+        res.status(400).send();
+    });
+
+});
+
 app.listen(3000, () => {
     console.log('Server started at port 3000');
 });
